@@ -31,6 +31,27 @@ def split(img):
 # Function to compute the harmonic mean of each image 
 def harmonic_mean(img_channel): 
     return stats.harmonic_mean(img_channel)
+
+
+# Function to find center 9x9 patch of an image
+def extract_center_patch(img):
+    # Get the dimensions of the image
+    height, width = img.shape[:2]
+
+    # Calculate the center coordinates
+    center_x = width // 2
+    center_y = height // 2
+
+    # Calculate the coordinates for the 9x9 patch
+    start_x = max(center_x - 4, 0)
+    end_x = min(center_x + 5, width)
+    start_y = max(center_y - 4, 0)
+    end_y = min(center_y + 5, height)
+
+    # Extract the patch
+    patch = img[start_y:end_y, start_x:end_x]
+
+    return patch
    
     
 # Function to create the feature vector
