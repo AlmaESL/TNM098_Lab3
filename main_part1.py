@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import cosine_similarity
 
+from makeFeatureVector import makeFeatureVec
+
 # === MAIN ===
 
 if __name__ == "__main__":
@@ -17,7 +19,7 @@ if __name__ == "__main__":
     # extract features using makeFeatureVec
     for path in image_paths:
         img = cv2.imread(path)
-        vec = makeFeatureVector(img)
+        vec = makeFeatureVec(img)
         feature_vectors.append(vec)
 
     feature_matrix = np.array(feature_vectors)
