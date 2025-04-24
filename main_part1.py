@@ -1,19 +1,49 @@
+import os
 import cv2
-import os 
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics.pairwise import cosine_similarity
 
-from makeFeatureVector import makeVector 
-from colorConverter import convertToHSV, convertToLAB, convertToYCrCb
+# === MAIN ===
 
-# TODO: compute the cosine similarity distance between all vectors 
+if __name__ == "__main__":
+    image_folder = "Lab3.1"
+    #image_folder = 'C:/Users/almal/Desktop/termin8/TNM098/lab 3/TNM098_Lab3/Lab3.1'
 
-# TODO: save results in a 12x12 matrix of cosine similarity distances
+    image_paths = sorted([os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith(('.jpg', '.png'))])[:12]
 
-# TODO: use the matrix to rank the 11 images in similarity to one chosen image
+    feature_vectors = []
 
-# TODO: visualize the distance results from the ranking eg using a heatmap on pixel-by-pixel basis
+    # extract features using makeFeatureVec
+    for path in image_paths:
+        img = cv2.imread(path)
+        vec = makeFeatureVector(img)
+        feature_vectors.append(vec)
 
+    feature_matrix = np.array(feature_vectors)
 
-# Call images from original image directory 
-original_image_dir = 'C:/Users/almal/Desktop/termin8/TNM098/lab 3/TNM098_Lab3/Lab3.1'
+    # TODO: compute the cosine similarity distance between all vectors
+    similarity_matrix = cosine_similarity(feature_matrix)
 
-# Extract images 
+    # TODO: save results in a 12x12 matrix of cosine similarity distances
+    print("12x12 Cosine Similarity Matrix:")
+    print(similarity_matrix)
+
+    # TODO: use the matrix to rank the 11 images in similarity to one chosen image
+    chosen_index = 0  # välj t.ex. första bilden
+    scores = similarity_matrix[chosen_index]
+    ranked_indices = np.argsort(scores)[::-1]
+
+    print(f"\nLikhetsranking till bilden: {os.path.basename(image_paths[chosen_index])}")
+    for i in ranked_indices[1:]:  # hoppa över bilden själv
+        print(f"{os.path.basename(image_paths[i])} — Likhet: {scores[i]:.4f}")
+
+    # TODO: visualize the distance results using a heatmap
+    plt.figure(figsize=(8, 6))
+    plt.imshow(similarity_matrix, cmap='viridis')
+    plt.colorbar(label='Cosine Similarity')
+    plt.title("Likhetsmatris (cosine similarity)")
+    plt.xticks(ticks=range(12), labels=[os.path.basename(p) for p in image_paths], rotation=45)
+    plt.yticks(ticks=range(12), labels=[os.path.basename(p) for p in image_paths])
+    plt.tight_layout()
+    plt.show()
