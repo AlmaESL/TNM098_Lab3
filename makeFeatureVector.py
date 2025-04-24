@@ -63,6 +63,10 @@ def makeFeatureVec(img):
     # Convert to all color spaces
     hsv, lab, rgb = convert(img)
     
+    # Get the 9x9 center patch 
+    lab_center = extract_center_patch(lab)
+    rgb_center = extract_center_patch(rgb)
+    
     # Split channels
     h, s, v = split(hsv)
     l, a, b = split(lab)
@@ -87,6 +91,22 @@ def makeFeatureVec(img):
     feature_vector.append(g_mean) 
     bb_mean = harmonic_mean(bb)
     feature_vector.append(bb_mean) 
+    
+    # Split center patches channels 
+    l_center, a_center, b_center = split(lab_center)
+    r_center, g_center, bb_center = split(rgb_center)
+    
+    # Compute average L in center patch of LAB 
+    l_center_mean = stats.harmonic_mean(l_center)
+    feature_vector.append(l_center_mean)
+    
+    # Compute harmonic mean of rgb center patch 
+    r_center_mean = stats.harmonic_mean(r_center)
+    feature_vector.append(r_center_mean)
+    g_center_mean = stats.harmonic_mean(g_center)
+    feature_vector.append(g_center_mean)
+    bb_center_mean = stats.harmonic_mean(bb_center)
+    feature_vector.append(bb_center_mean)
     
     print(feature_vector)
     
