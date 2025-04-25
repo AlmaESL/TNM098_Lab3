@@ -1,6 +1,8 @@
 from colorConverter import convert_image_color_space
+from computeHistogram import compute_edge_orientation_histogram
 import statistics as stats
 import cv2
+import numpy as np
 
 # TODO: decide what features to use
 
@@ -107,6 +109,12 @@ def makeFeatureVec(img):
     feature_vector.append(g_center_mean)
     bb_center_mean = harmonic_mean(bb_center)
     feature_vector.append(bb_center_mean)
+    
+    # Get the histogram vector
+    hist = compute_edge_orientation_histogram(img)
+    
+    # concatenate histogram with feature vector
+    feature_vector = np.concatenate((feature_vector, hist))
     
     print(feature_vector)
     
