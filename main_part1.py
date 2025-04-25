@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     feature_matrix = np.array(feature_vectors)
 
-    # TODO: compute the cosine similarity distance between all vectors
+    # compute the cosine similarity distance between all vectors
     similarity_matrix = cosine_similarity(feature_matrix)
 
     # TODO: save results in a 12x12 matrix of cosine similarity distances
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     for i in ranked_indices[1:]:  # hoppa över bilden själv
         print(f"{os.path.basename(image_paths[i])} — Likhet: {scores[i]:.4f}")
 
-    # TODO: visualize the distance results using a heatmap
+    # visualize the distance results using a heatmap
     plt.figure(figsize=(8, 6))
     plt.imshow(similarity_matrix, cmap='viridis')
     plt.colorbar(label='Cosine Similarity')

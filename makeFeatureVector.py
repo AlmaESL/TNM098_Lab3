@@ -31,8 +31,17 @@ def split(img):
 
 
 # Function to compute the harmonic mean of each image 
-def harmonic_mean(img_channel): 
-    return stats.harmonic_mean(img_channel)
+#def harmonic_mean(img_channel): 
+ #   return stats.harmonic_mean(img_channel)
+
+
+def harmonic_mean(img_channel):
+    flat = img_channel.flatten()
+    flat = flat[flat > 0]  # Undvik division med noll
+    if len(flat) == 0:
+        return 0  # Om inga pixlar kvar, returnera 0
+    return len(flat) / np.sum(1.0 / flat)
+
 
 
 # Function to find center 9x9 patch of an image
