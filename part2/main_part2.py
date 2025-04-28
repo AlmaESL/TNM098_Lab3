@@ -4,6 +4,7 @@ from preprocessing import load_and_process
 from filter import get_relevant
 from tfidf import create_corpus, build_tfidf_matrix, normalize_tfidf_matrix
 from LDA import LDA_function
+from plot_topic import plot_topic_temporal_distribution
 
 # Filepath
 filepath = 'TNM098-MC3-2011.csv'
@@ -96,3 +97,5 @@ fig.show()
 #---------------------------------------------------------------------------#
 
 LDA_function(relevant_df)
+
+plot_topic_temporal_distribution(relevant_df, 9)

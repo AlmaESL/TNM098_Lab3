@@ -15,7 +15,7 @@ def LDA_function(raw_corpus):
     X = vectorizer.fit_transform(corpus)
 
     # 3) fit sklearn’s LDA
-    lda_model = LDA(n_components=15, random_state=42)
+    lda_model = LDA(n_components=9, random_state=42)
     lda_model.fit(X)
 
     # 4) prepare the pyLDAvis panel
