@@ -2,9 +2,11 @@ import pandas as pd
 import plotly.graph_objects as go
 from preprocessing import load_and_process
 from filter import get_relevant
+from tfidf import create_corpus, build_tfidf_matrix, normalize_tfidf_matrix
 
 # Filepath
-filepath = 'TNM098-MC3-2011.csv'
+# filepath = 'TNM098-MC3-2011.csv'
+filepath = 'C:/Users/almal/Desktop/termin8/TNM098/lab 3/TNM098_Lab3/TNM098-MC3-2011.csv'
 
 # Load and process the data
 df = load_and_process(filepath)
@@ -65,3 +67,27 @@ fig.update_layout(
 )
 
 fig.show()
+
+
+
+#---------------------------------------------------------------------#
+
+# make corpus of df
+corpus = create_corpus(relevant_df)
+# print("Corpus: ", corpus)
+
+# matrix, terms = build_tfidf_matrix(corpus)
+
+# matrix_norm = normalize_tfidf_matrix(matrix)
+# print("Matrix: ", matrix_norm)
+# print("Terms: ", terms)
+
+
+tfidf = build_tfidf_matrix(corpus)
+print("TF-IDF Matrix: ")
+for term, score in tfidf:
+    print(f"{term}: {score:.4f}")
+
+
+
+# print matrix to web browser

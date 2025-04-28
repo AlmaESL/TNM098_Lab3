@@ -30,6 +30,7 @@ def preprocess(text):
     lemmas = [token.lemma_ for token in doc]
     return ' '.join(lemmas)
 
+
 def load_and_process(filepath):
     # Load Dataset
     df = pd.read_csv(filepath, delimiter=';', encoding='utf-8')
