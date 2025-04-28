@@ -50,7 +50,18 @@ fig.update_layout(
     xaxis_title='Date',
     yaxis_title='Count',
     xaxis_tickformat='%b %d',
-    legend_title='Legend'
+    legend_title='Legend',
+    xaxis=dict(
+        tickmode='array',
+        tickvals=list(unfiltered_counts.index),  # Set ticks to all dates
+        ticktext=[date.strftime('%b %d') for date in unfiltered_counts.index],  # Optional: nicer formatting
+        tickangle=45  # Rotate labels so they don't overlap
+),
+    yaxis = dict(
+    title='Count',
+    tickmode='linear',
+    dtick=1  # Step size = 1 (forces integer ticks)
+)
 )
 
 fig.show()
