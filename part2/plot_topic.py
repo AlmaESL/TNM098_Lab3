@@ -30,7 +30,7 @@ def plot_topic_temporal_distribution(raw_df, n_topics=9):
         .reset_index(name='Count')
     )
     # ensure sorted by date
-    agg = agg.sort_values('Date')
+    agg = agg.sort_values('DateOnly')
 
     # --- 5) Plot with grouped bars, custom ordering & ticks ---
     # define the exact order of topics in the legend
@@ -56,11 +56,15 @@ def plot_topic_temporal_distribution(raw_df, n_topics=9):
 
     # force every day to appear, full date format, rotated
     fig.update_xaxes(
-        tickformat='%b %d, %Y',
+        tickformat='%b %d',
         dtick='D1',        # one day interval
         tickangle=45
     )
 
-    fig.update_yaxes(title_text='Article Count')
+    fig.update_yaxes(
+        title_text='Article Count',
+        tickmode='linear',  # Force integer tick mode
+        dtick=1  # Set tick step to 1 to force integer ticks
+    )
 
     fig.show()
