@@ -1,30 +1,56 @@
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objects as go
 from preprocessing import load_and_process
 from filter import get_relevant
 
 # Filepath
-filepath = 'C:/Users/almal/Desktop/termin8/TNM098/lab 3/TNM098_Lab3/TNM098-MC3-2011.csv'
+filepath = 'TNM098-MC3-2011.csv'
 
 # Load and process the data
 df = load_and_process(filepath)
 
-# Look at top data entries 
-# print(df[['Content', 'processed_content']].head())
-
-# Temporal Distribution (Unfiltered)
+# Parse date column
 df['Date'] = pd.to_datetime(df['Date'])
 
-fig = px.histogram(df, x='Date', nbins=50, title='News Report Frequency')
-# fig = px.bar(df, x='Date', title='News Report Frequency')
-fig.show()
-
-
-# Get relevant data
+# Get relevant (filtered) data
 relevant_df = get_relevant(df)
-# print('length of relevant_df:', len(relevant_df))
-# print('length of df:', len(df))
 
-# Temporal Distribution (Filtered)
-fig = px.bar(relevant_df, x='Date', title='News Report Frequency - Filtered')
+# --- Group counts per day ---
+# Count total number of reports per day (unfiltered)
+unfiltered_counts = df['Date'].dt.date.value_counts().sort_index()
+
+# Count number of relevant reports per day (filtered)
+filtered_counts = relevant_df['Date'].dt.date.value_counts().sort_index()
+
+# --- Create the Figure ---
+fig = go.Figure()
+
+# Add unfiltered data (background, gray bars)
+fig.add_trace(go.Bar(
+    x=unfiltered_counts.index,
+    y=unfiltered_counts.values,
+    name='All Reports',
+    marker_color='gray',
+    opacity=0.6
+))
+
+# Add filtered data (foreground, blue bars)
+fig.add_trace(go.Bar(
+    x=filtered_counts.index,
+    y=filtered_counts.values,
+    name='Relevant Reports',
+    marker_color='blue',
+    opacity=0.8
+))
+
+# Update layout
+fig.update_layout(
+    title='News Report Frequency (Unfiltered and Filtered)',
+    barmode='overlay',  # Overlapping bars
+    xaxis_title='Date',
+    yaxis_title='Count',
+    xaxis_tickformat='%b %d',
+    legend_title='Legend'
+)
+
 fig.show()
