@@ -6,8 +6,8 @@ from tfidf import create_corpus, build_tfidf_matrix, normalize_tfidf_matrix
 from LDA import LDA_function
 
 # Filepath
-# filepath = 'TNM098-MC3-2011.csv'
-filepath = 'C:/Users/almal/Desktop/termin8/TNM098/lab 3/TNM098_Lab3/TNM098-MC3-2011.csv'
+filepath = 'TNM098-MC3-2011.csv'
+#filepath = 'C:/Users/almal/Desktop/termin8/TNM098/lab 3/TNM098_Lab3/TNM098-MC3-2011.csv'
 
 # Load and process the data
 df = load_and_process(filepath)
