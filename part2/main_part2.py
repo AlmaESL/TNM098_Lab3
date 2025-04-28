@@ -15,8 +15,8 @@ df = load_and_process(filepath)
 # Temporal Distribution (Unfiltered)
 df['Date'] = pd.to_datetime(df['Date'])
 
-# fig = px.histogram(df, x='Date', nbins=50, title='News Report Frequency')
-fig = px.bar(df, x='Date', title='News Report Frequency')
+fig = px.histogram(df, x='Date', nbins=50, title='News Report Frequency')
+# fig = px.bar(df, x='Date', title='News Report Frequency')
 fig.show()
 
 
